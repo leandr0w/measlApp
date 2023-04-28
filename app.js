@@ -12,6 +12,7 @@ const globalErrorHandler = require('./controllers/error.controller');
 const app = express();
 
 const userRouter = require('./routes/user.router');
+const restaurantRouter = require('./routes/restaurant.router');
 
 const limiter = rateLimit({
   max: 100,
@@ -32,6 +33,7 @@ app.use(hpp());
 app.use('/api/v1', limiter);
 
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/restaurants', restaurantRouter);
 
 app.all('*', (req, res, next) => {
   return next(
