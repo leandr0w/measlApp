@@ -13,6 +13,7 @@ const app = express();
 
 const userRouter = require('./routes/user.router');
 const restaurantRouter = require('./routes/restaurant.router');
+const mealRouter = require('./routes/meal.route');
 
 const limiter = rateLimit({
   max: 100,
@@ -34,6 +35,7 @@ app.use('/api/v1', limiter);
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/restaurants', restaurantRouter);
+app.use('/api/v1/meals', mealRouter);
 
 app.all('*', (req, res, next) => {
   return next(

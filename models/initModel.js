@@ -1,9 +1,9 @@
-const Meals = require('./meals.model');
+const Meal = require('./meal.model');
 const Restaurant = require('./restaurant.model');
 
 const initModel = () => {
-  Restaurant.hasMany(Meals, { foreignKey: 'restaurantId' });
-  Meals.belongsTo(Restaurant, { foreignKey: 'restaurantId' });
+  Restaurant.hasMany(Meal, { foreignKey: 'restaurantId' });
+  Meal.belongsTo(Restaurant, { foreignKey: 'restaurantId' });
 };
 
 module.exports = initModel;
