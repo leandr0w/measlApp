@@ -2,24 +2,42 @@ const express = require('express');
 const router = express.Router();
 
 const restaurantController = require('../controllers/restaurant.controller');
+const reviewController = require('../controllers/review.controller');
 
 const restaurantMiddleware = require('../middlewares/restaurant.middleware');
-
-router.post('/', restaurantController.createRestaurant);
+const authMiddleware = require('../middlewares/auth.middleware');
+const validationMiddleware = require('../middlewares/validation.middleware');
 
 router.get('/', restaurantController.findAllRestaurant);
 
 router.get('/:id', restaurantMiddleware.validIfRestaurantExist);
 
+router.use(authMiddleware.protect);
+
+router.post(
+  '/',
+  validationMiddleware.createRestaurant,
+  authMiddleware.restrictTo('admin'),
+  restaurantController.createRestaurant
+);
+
 router.patch(
   '/:id',
   restaurantMiddleware.validIfRestaurantExist,
+  authMiddleware.restrictTo('admin'),
   restaurantController.updateRestaurant
 );
 router.delete(
   '/:id',
   restaurantMiddleware.validIfRestaurantExist,
+  authMiddleware.restrictTo('admin'),
   restaurantController.deleteRestaurant
+);
+
+router.post(
+  '/review/:restaurantId',
+  validationMiddleware.createReview,
+  reviewController.createReview
 );
 
 module.exports = router;

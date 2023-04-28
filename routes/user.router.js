@@ -8,9 +8,17 @@ const authMiddleware = require('../middlewares/auth.middleware');
 const validationMiddleware = require('../middlewares/validation.middleware');
 const userMiddleware = require('../middlewares/user.middleware');
 
-router.post('/signup', authController.signup);
+router.post(
+  '/signup',
+  validationMiddleware.createUserValidation,
+  authController.signup
+);
 
-router.post('/login', authController.login);
+router.post(
+  '/login',
+
+  authController.login
+);
 
 router.use(authMiddleware.protect);
 

@@ -34,3 +34,20 @@ exports.updateUserValidation = [
     .withMessage('Must be a valid email'),
   validFields,
 ];
+exports.createRestaurant = [
+  body('name').notEmpty().withMessage('Name cannot be empty'),
+  body('address').notEmpty().withMessage('Address cannot be empty'),
+  body('rating')
+    .notEmpty()
+    .isInt({ min: 1, max: 5 })
+    .withMessage('You rating 1 to 5'),
+  validFields,
+];
+exports.createReview = [
+  body('comment').notEmpty().withMessage('Comment cannot be empty'),
+  body('rating')
+    .notEmpty()
+    .isInt({ min: 1, max: 10 })
+    .withMessage('You rating 1 to 10'),
+  validFields,
+];
