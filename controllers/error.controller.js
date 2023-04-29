@@ -9,6 +9,9 @@ const handleJWTExpiredError = () => {
 const handleJWTError = () => {
   new AppError('Invalid token. Please login again', 401);
 };
+const handleCastError23503 = () => {
+  new AppError('The restaurant not exist', 404);
+};
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
@@ -47,6 +50,7 @@ const globalErrorHandler = (err, req, res, next) => {
     if (error.parent?.code === '22P02') error = handleCastError22P02();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
+    if (error.parent?.code === '23503') error = handleCastError23503();
 
     sendErrorProd(error, res);
   }
