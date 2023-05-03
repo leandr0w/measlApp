@@ -16,7 +16,7 @@ exports.findAllRestaurant = catchAsync(async (req, res, next) => {
 });
 
 exports.findRestaurant = catchAsync(async (req, res, next) => {
-  const { restaurant } = req.params;
+  const { restaurant } = req;
   res.status(200).json({
     status: 'success',
     restaurant,

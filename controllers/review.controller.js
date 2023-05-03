@@ -3,13 +3,13 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.createReview = catchAsync(async (req, res, next) => {
   const { comment, rating } = req.body;
-  const { restaurantId } = req.params;
+  const { id } = req.params;
   const { sessionUser } = req;
 
   const review = await Review.create({
     comment,
     rating,
-    restaurantId,
+    restaurantId: id,
     userId: sessionUser.id,
   });
 
@@ -21,12 +21,10 @@ exports.createReview = catchAsync(async (req, res, next) => {
 });
 
 exports.updateReview = catchAsync(async (req, res, next) => {
+  const { review } = req;
   const { comment, rating } = req.body;
-  const { review, restaurant } = req;
 
-  const updatereview = { review, restaurant };
-
-  await updatereview.update({
+  await review.update({
     comment,
     rating,
   });
@@ -34,6 +32,17 @@ exports.updateReview = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     message: 'The review has been changed',
-    updatereview,
+    review,
+  });
+});
+
+exports.deleteReview = catchAsync(async (req, res, next) => {
+  const { review } = req;
+
+  await review.update({ status: 'deleted' });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Review removed',
   });
 });

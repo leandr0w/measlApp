@@ -11,14 +11,14 @@ const initModel = () => {
   Restaurant.hasMany(Review, { foreignKey: 'restaurantId' });
   Review.belongsTo(Restaurant, { foreignKey: 'restaurantId' });
 
-  User.hasMany(Review, { foreignKey: 'id' });
-  Review.belongsTo(User, { foreignKey: 'id' });
+  User.hasMany(Review, { foreignKey: 'userId' });
+  Review.belongsTo(User, { foreignKey: 'userId' });
 
   User.hasMany(Order, { foreignKey: 'userId' });
   Order.belongsTo(User, { foreignKey: 'userId' });
 
   Meal.hasOne(Order, { foreignKey: 'mealId' });
-  Order.hasOne(Meal, { foreignKey: 'mealId' });
+  Order.belongsTo(Meal, { foreignKey: 'mealId' });
 };
 
 module.exports = initModel;

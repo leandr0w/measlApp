@@ -35,5 +35,6 @@ router.delete(
   authMiddleware.protectAccountOwner,
   userController.deleteUser
 );
+router.get('/orders', userController.getOrders);
 
 module.exports = router;

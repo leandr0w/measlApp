@@ -51,3 +51,13 @@ exports.createReview = [
     .withMessage('You rating 1 to 10'),
   validFields,
 ];
+exports.createMeal = [
+  body('name').notEmpty().withMessage('Name cannot be empty'),
+  body('price').notEmpty().isInt().withMessage('Price cannot be empty'),
+  validFields,
+];
+exports.createOrder = [
+  body('quantity').notEmpty().isInt().withMessage('Quantity cannot be empty'),
+  body('mealId').notEmpty().isInt().withMessage('Price cannot be empty'),
+  validFields,
+];

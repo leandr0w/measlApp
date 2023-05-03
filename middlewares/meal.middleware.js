@@ -17,3 +17,16 @@ exports.validIfExistMeals = catchAsync(async (req, res, next) => {
   req.meal = meal;
   next();
 });
+
+exports.validMealActive = catchAsync(async (req, res, next) => {
+  const meal = await Meal.findOne({
+    where: {
+      status: 'active',
+    },
+  });
+  if (!meal) {
+    return next(new AppError('The meal not found'), 404);
+  }
+  req.meal = meal;
+  next();
+});

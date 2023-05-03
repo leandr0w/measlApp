@@ -36,17 +36,24 @@ router.delete(
 );
 
 router.post(
-  '/review/:restaurantId',
+  '/review/:id',
   validationMiddleware.createReview,
   reviewController.createReview
 );
 router.patch(
   '/review/:restaurantId/:id',
-  restaurantMiddleware.validIfRestaurantExist,
   reviewMiddlewarE.validIfReviewExist,
-  validationMiddleware.createReview,
+  reviewMiddlewarE.userReview,
   authMiddleware.protectAccountOwner,
+  validationMiddleware.createReview,
   reviewController.updateReview
+);
+router.delete(
+  '/review/:restaurantId/:id',
+  reviewMiddlewarE.validIfReviewExist,
+  reviewMiddlewarE.userReview,
+  authMiddleware.protectAccountOwner,
+  reviewController.deleteReview
 );
 
 module.exports = router;
