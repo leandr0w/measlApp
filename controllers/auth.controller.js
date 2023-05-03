@@ -3,9 +3,15 @@ const generateJWT = require('../utils/jwt');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const AppError = require('../utils/app.error');
+const { ref, uploadBytes } = require('firebase/storage');
+const { storage } = require('../utils/firebase');
 
 exports.signup = catchAsync(async (req, res, next) => {
   const { name, email, password, role } = req.body;
+
+  const imgRef = ref(storage, `users/${Date.now()}-${req.file.originalname}`);
+
+  const imgUploaded = await uploadBytes(imgRef, req.file.buffer);
 
   const salt = await bcrypt.genSalt(10);
 
@@ -16,6 +22,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: email.toLowerCase(),
     password: encryptedPassword,
     role,
+    profileImgUrl: imgUploaded.metadata.fullPath,
   });
   const token = await generateJWT(user.id);
 
@@ -27,6 +34,7 @@ exports.signup = catchAsync(async (req, res, next) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      profileImgUrl: user.profileImgUrl,
       role: user.role,
     },
   });
@@ -58,6 +66,7 @@ exports.login = catchAsync(async (req, res, next) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      profileImgUrl: user.profileImgUrl,
     },
   });
 });

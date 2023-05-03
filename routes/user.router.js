@@ -8,8 +8,11 @@ const authMiddleware = require('../middlewares/auth.middleware');
 const validationMiddleware = require('../middlewares/validation.middleware');
 const userMiddleware = require('../middlewares/user.middleware');
 
+const { upload } = require('./../utils/multer');
+
 router.post(
   '/signup',
+  upload.single('profileImgUrl'),
   validationMiddleware.createUserValidation,
   authController.signup
 );
