@@ -33,8 +33,6 @@ const User = db.define('user', {
   profileImgUrl: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue:
-      'https://www.researchgate.net/publication/315108532/figure/fig1/AS:472492935520261@1489662502634/Figura-2-Avatar-que-aparece-por-defecto-en-Facebook.png',
   },
   status: {
     type: DataTypes.ENUM('active', 'disabled'),

@@ -17,13 +17,11 @@ router.post(
   authController.signup
 );
 
-router.post(
-  '/login',
-
-  authController.login
-);
+router.post('/login', authController.login);
 
 router.use(authMiddleware.protect);
+
+router.get('/', userController.findAll);
 
 router.patch(
   '/:id',
